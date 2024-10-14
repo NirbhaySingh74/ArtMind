@@ -45,8 +45,20 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  posts         Post[]
+}
 
-  @@map("users")
+model Post {
+  id        String   @id @default(cuid())
+  promt     String
+  url       String
+  seed      Int
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model VerificationToken {
