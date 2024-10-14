@@ -19,10 +19,10 @@ const Header = () => {
   return (
     <div className="fixed top-0 w-full h-[60px] bg-black border-b border-white/60 p-3 flex justify-between items-center z-50">
       <Link href="/">
-        <h2 className="font-bold text-xl text-white cursor-pointer">Artmind</h2>
+        <h2 className="font-bold text-xl  cursor-pointer">Artmind</h2>
       </Link>
       {initialLoading || status === "loading" ? (
-        <BiLoaderCircle className="animate-spin text-white text-3xl" />
+        <BiLoaderCircle className="animate-spin " />
       ) : !session ? (
         <div className="__menu">
           <Button onClick={() => signIn("google")}>Login</Button>
@@ -30,14 +30,7 @@ const Header = () => {
       ) : (
         <Avatar>
           <AvatarImage src={session.user?.image || ""} alt="User avatar" />
-          <AvatarFallback>
-            {session.user?.name
-              ? session.user.name
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")
-              : "U"}
-          </AvatarFallback>
+          <AvatarFallback>NS</AvatarFallback>
         </Avatar>
       )}
     </div>
