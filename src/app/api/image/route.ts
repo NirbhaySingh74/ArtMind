@@ -4,13 +4,15 @@ export async function POST(request: NextRequest) {
   const { prompt } = await request.json();
 
   function generateRandomNumber(): number {
-    return Math.floor(Math.random() * 10000000) + 1;
+    const min = 1;
+    const max = 100;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   const randomSeed = generateRandomNumber();
   const imageURL = `https://image.pollinations.ai/prompt/${encodeURIComponent(
     prompt
-  )}&seed=${randomSeed}`;
+  )}&seed=${randomSeed}&width=512&height=512&nologo=True`;
 
   await fetch(imageURL);
   return NextResponse.json({ url: imageURL });

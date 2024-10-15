@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import Image from "next/image";
 
 const formSchema = z.object({
   prompt: z
@@ -30,8 +31,20 @@ export default function Pag() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      setLoading(true);
+      const response = await fetch("/api/image", {
+        method: "POST",
+        body: JSON.stringify(values),
+      });
+      const data = await response.json();
+      setOutputImg(data.url);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -71,12 +84,24 @@ export default function Pag() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit">Generate</Button>
+                <Button loading={loading} type="submit">
+                  Generate
+                </Button>
               </form>
             </Form>
           </div>
         </div>
-        <div className="__output flex-[1] bg-white/5 rounded-lg"></div>
+        <div className="__output flex-[1] bg-white/5 rounded- relative">
+          {outputImg && (
+            <Image
+              className="w-full h-full object-contain"
+              alt="output"
+              src={outputImg}
+              width={300}
+              height={300}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
