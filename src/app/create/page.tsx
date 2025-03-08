@@ -55,7 +55,7 @@ export default function Pag() {
           Generate Stunning Images from Text for FREE
         </p>
       </div>
-      <div className="flex border border-green-500 w-full gap-3 h-full">
+      <div className="flex border  w-full gap-3 h-full">
         <div className="__form flex-[2] gap-2 flex justify-center items-start flex-col">
           <p className="text-left text-sm text-white/80">
             Type your prompt below to create any image you can imagine!
@@ -91,8 +91,8 @@ export default function Pag() {
             </Form>
           </div>
         </div>
-        <div className="__output flex-[1] bg-white/5 rounded- relative">
-          {outputImg && (
+        <div className="__output flex-[1] bg-white/5 rounded- relative overflow-hidden">
+          {outputImg ? (
             <Image
               className="w-full h-full object-contain"
               alt="output"
@@ -100,6 +100,12 @@ export default function Pag() {
               width={300}
               height={300}
             />
+          ) : (
+            <>
+              <div className="w-full h-full flex justify-center items-center text-white/70 text-center p-3">
+                Enter your prompt and hit generate!
+              </div>
+            </>
           )}
         </div>
       </div>
